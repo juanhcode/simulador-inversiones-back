@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const db = require('../connection');
-const Rol = require('./Rol');
 
 const User = db.define('User', {
     id: {
@@ -16,16 +15,6 @@ const User = db.define('User', {
     },
     username: {
         type: DataTypes.STRING
-    },
-    rol_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Rol,
-            key: 'rol_id'
-        }
-    },
-    foto: {
-        type: DataTypes.STRING(256),
     }},
     {
     timestamps: false,
@@ -40,6 +29,5 @@ User.prototype.toJSON = function(){
     return values;
 }
 
-Usuario.belongsTo(Rol, {foreignKey: 'rol_id'});
 
-module.exports = Usuario;
+module.exports = User;
