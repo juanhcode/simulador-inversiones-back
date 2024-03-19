@@ -1,29 +1,34 @@
 const { DataTypes } = require('sequelize');
 const db = require('../connection');
-const Role = require('./Role');
+const User = require('./User');
+const Category = require('./Category');
 
-const User = db.define('user', {
+const Project = db.define('project', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey:true
     },
-    firstName: {
+    name: {
         type: DataTypes.STRING
     },
-    last_name: {
+    description: {
         type: DataTypes.STRING
     },
-    email: {
-        type: DataTypes.STRING
+    file:{
+        type:DataTypes.JSON
     },
-    password: {
-        type: DataTypes.STRING
-    },
-    role: {
+    user: {
         type: DataTypes.STRING,
         references:{
-            model:Role,
+            model:User,
+            key:'id'
+        }
+    },
+    category: {
+        type: DataTypes.STRING,
+        references:{
+            model:Category,
             key:'id'
         }
     }},
@@ -31,15 +36,15 @@ const User = db.define('user', {
     timestamps: false,
     freezeTableName: true,
     tableName: 'user'
-});
+    }
+);
 
-User.belongsTo(Role,{foreignKey:'id'});
+Project.belongsTo(User,{foreignKey:'id'});
+Project.belongsTo(Category,{foreignKey:'id'})
 
-User.prototype.toJSON = function(){
+Project.prototype.toJSON = function(){
     let values = Object.assign({}, this.get());
-    delete values.password;
     return values;
 }
 
-
-module.exports = User;
+module.exports = Project;
