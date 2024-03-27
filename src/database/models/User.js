@@ -9,23 +9,24 @@ const User = db.define('user', {
         primaryKey:true
     },
     firstName: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: false
     },
     last_name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     email: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: false
     },
     password: {
-        type: DataTypes.STRING
-    },
-    role: {
         type: DataTypes.STRING,
-        references:{
-            model:Role,
-            key:'id'
-        }
+        allowNull: false
     }},
     {
     timestamps: false,

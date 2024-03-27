@@ -41,7 +41,7 @@ const Investment = db.define('investment', {
     {
     timestamps: false,
     freezeTableName: true,
-    tableName: 'category'
+    tableName: 'investment'
     }
 );
 
