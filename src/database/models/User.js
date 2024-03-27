@@ -33,7 +33,7 @@ const User = db.define('user', {
     tableName: 'user'
 });
 
-User.belongsTo(Role,{foreignKey:'id'});
+//User.belongsTo(Role,{foreignKey:'id'});
 
 User.prototype.toJSON = function(){
     let values = Object.assign({}, this.get());

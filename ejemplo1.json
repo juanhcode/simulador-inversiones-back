@@ -1,0 +1,48 @@
+{
+    "inversion": {
+        "moneda": {
+            "COP": 3894,
+            "GBP": 3434
+        },
+        "fija": [
+            {
+                "descripcion": "Hola",
+                "cantidad": 4324,
+                "precio": 3890.54,
+                "moneda": "COP",
+                "total": 231,
+                "tipo":"Fija"
+            },
+            {
+                "descripcion": "producto dulce[",
+                "cantidad": 434,
+                "precio": 2424,
+                "moneda": "COP",
+                "total": 3223
+            },
+            {
+                "total": 0
+            }
+        ],
+        "variable": [
+            {
+                "descripcion": "mani",
+                "cantidad": 4324,
+                "precio": 3890.54,
+                "moneda": "COP",
+                "total": 231
+            },
+            {
+                "descripcion": "producto frijol",
+                "cantidad": 434,
+                "precio": 2424,
+                "moneda": "COP",
+                "total": 3223
+            },
+            {
+                "total": 0
+            }
+        ],
+        "total": 234234242424242
+    }
+}
