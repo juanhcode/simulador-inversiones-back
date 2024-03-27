@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const db = require('../connection');
-const Role = require('./Role');
 
 const User = db.define('user', {
     id: {

@@ -19,7 +19,7 @@ const Investment = db.define('investment', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    Individual_total : {
+    individual_total : {
         type: DataTypes.INTEGER,
         allowNull: false
     },
