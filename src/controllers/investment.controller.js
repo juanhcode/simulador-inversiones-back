@@ -13,16 +13,49 @@ const createInvestment = async (req, res) => {
             })
         }
         res.status(201).json({
-            msg: "Investment created",
+            status:"CREATED",
+            data: "Investment created",
         })
     } catch (error) {
         res.status(500).json({
-            msg: 'Error en el servidor',
-            error: error
+            status: 'Error en el servidor',
+            data: error
         })
     }
 }
 
+const deleteInvestment = async (req, res) => {
+    const { id } = req.params;
+    const investmentExists = await investmentService.investmentExistsById(id);
+    if (!investmentExists) {
+        return res.status(404).json({
+            msg: `No existe la inversión con el id ${id}`
+        })
+    }
+    await investmentService.deleteInvestment(id);
+    res.status(200).json({
+        msg: `Inversión con el id ${id} ha sido eliminado.`
+    });
+
+}
+
+const getInvestment = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const investment = await investmentService.getInvestmentById(id);
+        if(investment){
+            res.status(200).json(investment);
+        }else{
+            res.status(400).json({ error: 'Ups, vuelve a intentarlo' });
+        }
+        
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener todos los casos de prueba' });
+    }
+}
+
 module.exports = {
-    createInvestment
+    createInvestment,
+    deleteInvestment,
+    getInvestment
 }

@@ -9,6 +9,32 @@ const createInvestment = async (investment) => {
     }
 }
 
+const investmentExistsById = async (id) => {
+    const investment = await Investment.findByPk(id);
+    return investment;
+}
+
+const deleteInvestment = async(investmentId)=>{
+    const investmentDeleted = await Investment.destroy({
+        where:{
+            investment_id:investmentId,
+        }
+    });
+    return investmentDeleted;
+}
+
+const getInvestmentById = async(investmentId)=>{
+    const investment = await Investment.findByPk(investmentId);
+    const {dataValues} = investment;
+    if(dataValues){
+        return dataValues;
+    }
+    return investment;
+}
+
 module.exports = {
-    createInvestment
+    createInvestment,
+    investmentExistsById,
+    deleteInvestment,
+    getInvestmentById
 }

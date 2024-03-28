@@ -15,4 +15,14 @@ router.post('',[
     validateFields
 ], investmentController.createInvestment);
 
+router.delete('/:id',[
+    check("id", "El id es obligatorio").not().isEmpty(),
+    validateFields
+], investmentController.deleteInvestment);
+
+router.get('/:id',[
+    check("id", "El id es obligatorio").not().isEmpty(),
+    validateFields
+], investmentController.getInvestment);
+
 module.exports = router;
