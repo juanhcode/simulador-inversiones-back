@@ -32,9 +32,24 @@ const getInvestmentById = async(investmentId)=>{
     return investment;
 }
 
+const getAllInvestments = async()=>{
+    const investments = await Investment.findAll();
+    return investments;
+}
+const updateInvestment = async(id,investment)=>{
+    const investmentUpdated = await Investment.update(investment,{
+        where:{
+            investment_id:id,
+        }
+    })
+    return investmentUpdated;
+}
+
 module.exports = {
     createInvestment,
     investmentExistsById,
     deleteInvestment,
-    getInvestmentById
+    getInvestmentById,
+    getAllInvestments,
+    updateInvestment
 }
