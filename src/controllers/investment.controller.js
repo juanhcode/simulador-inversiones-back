@@ -1,8 +1,8 @@
 const investmentService = require('../services/investment.service');
 const createInvestment = async (req, res) => {
-    const { description, quantity,price,individual_total,total,type_of_investment,user_id } = req.body;
+    const { description, quantity, price,type_of_investment,user_id } = req.body;
     const newInvestment = {
-        description, quantity, price, individual_total, total, type_of_investment, user_id
+        description, quantity, price, type_of_investment, user_id
     }   
     try {
         const response = await investmentService.createInvestment(newInvestment);
@@ -69,9 +69,9 @@ const getAllInvestments = async (req, res) => {
 
 const updateInvestment = async (req, res) => {
     const id = req.params.id;
-    const { description, quantity,price,individual_total,total,type_of_investment,user_id } = req.body;
+    const { description, quantity,price,type_of_investment,user_id } = req.body;
     const newInvestment = {
-        description, quantity, price, individual_total, total, type_of_investment, user_id
+        description, quantity, price, type_of_investment, user_id
     } 
     const investmentExists = await investmentService.investmentExistsById(id);
     if (!investmentExists) {
