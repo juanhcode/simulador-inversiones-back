@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const db = require('../connection');
 const User = require('./User');
 const Investment = db.define('investment', {
-    id: {
+    investment_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey:true
@@ -35,7 +35,7 @@ const Investment = db.define('investment', {
         type: DataTypes.INTEGER,
         references:{
             model:User,
-            key:'id'
+            key:'user_id'
         }
     }},
     {
@@ -45,7 +45,7 @@ const Investment = db.define('investment', {
     }
 );
 
-Investment.belongsTo(User,{foreignKey:'id'});
+Investment.belongsTo(User,{foreignKey:'user_id'});
 
 Investment.prototype.toJSON = function(){
     let values = Object.assign({}, this.get());

@@ -1,46 +1,42 @@
 const {Router} = require('express');
 const router = Router();
 const investmentController = require('../../controllers/investment.controller');
+const { validateFields } = require('../../middlewares/validate-fields');
+const { check } = require('express-validator');
 
-/**
- * @swagger
- * /auth:
- *   post:
- *     summary: Create an investment.
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *               passsword:
- *                 type: string
- *             required:
- *               - email
- *               - password
- *     responses:
- *       200:
- *         description: Usuario autenticado con éxito.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 token:
- *                   type: string
- *                   description: Token de autenticación.
- *                 usuario:
- *                   $ref: '#/components/schemas/Usuario'
- *       401:
- *         description: Credenciales inválidas.
- *       500:
- *         description: Error en el servidor.
- */
+router.post('',[
+    check("description", "La descripción es obligatorio").not().isEmpty().isString(),
+    check("quantity", "La cantidad es obligatorio").not().isEmpty().isString(),
+    check("price", "El precio es obligatorio").not().isEmpty(),
+    check("individual_total", "El precio individual es obligatorio").not().isEmpty(),
+    check("total", "El total es obligatorio").not().isEmpty(),
+    check("type_of_investment", "El tipo de inversión es obligatorio").not().isEmpty().isString(),
+    check("user_id", "El id del usuario es obligatorio").not().isEmpty(),
+    validateFields
+], investmentController.createInvestment);
 
-router.post('', investmentController.createInvestment);
+router.delete('/:id',[
+    check("id", "El id es obligatorio").not().isEmpty(),
+    validateFields
+], investmentController.deleteInvestment);
+
+router.get('/:id',[
+    check("id", "El id es obligatorio").not().isEmpty(),
+    validateFields
+], investmentController.getInvestment);
+
+router.get('',investmentController.getAllInvestments);
+
+router.put('/:id',[
+    check("description", "La descripción es obligatorio").not().isEmpty().isString(),
+    check("quantity", "La cantidad es obligatorio").not().isEmpty().isString(),
+    check("price", "El precio es obligatorio").not().isEmpty(),
+    check("individual_total", "El precio individual es obligatorio").not().isEmpty(),
+    check("total", "El total es obligatorio").not().isEmpty(),
+    check("type_of_investment", "El tipo de inversión es obligatorio").not().isEmpty().isString(),
+    check("user_id", "El id del usuario es obligatorio").not().isEmpty(),
+    check("id", "El id es obligatorio").not().isEmpty(),
+    validateFields
+], investmentController.updateInvestment);
 
 module.exports = router;
