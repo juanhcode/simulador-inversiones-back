@@ -5,16 +5,21 @@ const cors = require('cors');
 const morgan = require('morgan');
 const db = require ('./database/connection');
 require('dotenv').config();
-
-const investment = require('./routes/v1/inversion.route');
+const auth = require('./routes/v1/auth.routes');
+const investment = require('./routes/v1/investment.routes');
+const path = require("path");
 
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
 
+app.use('/v1/login', auth);
 app.use('/v1/investment', investment);
+app.use("/v1/doc", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)));
 
-let server = app.listen(8080, () => {
-    const port1 = server.address().port;
-    console.log(`Application server running on ${port1}`);
+let server = app.listen(4060, async () => {
+    await db.authenticate();
+    console.log('Database online');
+    //const port1 = server.address().port;
+    console.log(`Application server running on ${4060}`);
 });
