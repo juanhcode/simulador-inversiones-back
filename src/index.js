@@ -7,6 +7,7 @@ const db = require ('./database/connection');
 require('dotenv').config();
 const auth = require('./routes/v1/auth.routes');
 const investment = require('./routes/v1/investment.routes');
+const currency = require('./routes/v1/currency.routes');
 const path = require("path");
 
 app.use(morgan('dev'));
@@ -15,7 +16,7 @@ app.use(cors());
 
 app.use('/v1/login', auth);
 app.use('/v1/investment', investment);
-app.use("/v1/doc", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)));
+app.use('/v1/currency', currency);
 
 let server = app.listen(4060, async () => {
     await db.authenticate();

@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../connection');
+const Investment = require('./Investment');
+const User = require('./User');
 
 const Currency = db.define('Currency', {
     currency_id: {
@@ -15,19 +17,20 @@ const Currency = db.define('Currency', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    investment_id: {
+    user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Investment,
-            key: 'investment_id'
+            model: User,
+            key: 'user_id'
         }
     }
 }, {
     timestamps: false,
     freezeTableName: true,
+    tableName: 'currency'
 });
 
-Currency.belongsTo(Investment, {foreignKey: 'investment_id'})
+Currency.belongsTo(User, {foreignKey: 'user_id'})
 
 module.exports = Currency;
