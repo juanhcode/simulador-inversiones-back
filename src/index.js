@@ -3,31 +3,11 @@ const app = express();
 const port = 3030
 const cors = require('cors');
 const morgan = require('morgan');
+const db = require ('./database/connection');
 require('dotenv').config();
 const auth = require('./routes/v1/auth.routes');
 const investment = require('./routes/v1/investment.routes');
-const path = require("path");
-const db = require('./database/connection');
-
-//Swagger
-const swaggerUI = require("swagger-ui-express");
-const swaggerJsDoc = require("swagger-jsdoc");
-
-const swaggerSpec = {
-    definition: {
-        openapi: "3.0.0",
-        info: {
-            title: "Expo API",
-            version: "1.0.0"
-        },
-        servers: [
-            {
-                url: ''
-            }
-        ],
-    },
-    apis: [`${path.join(__dirname, "./routes/v1/*.js")}`]
-}
+const currency = require('./routes/v1/currency.routes');
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -35,7 +15,7 @@ app.use(cors());
 
 app.use('/v1/login', auth);
 app.use('/v1/investment', investment);
-app.use("/v1/doc", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)));
+app.use('/v1/currency', currency);
 
 let server = app.listen(4060, async () => {
     await db.authenticate();
