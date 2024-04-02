@@ -30,6 +30,13 @@ const login = async (req, res) => {
 
 const register = (req, res) => {
     const { names, last_names,user_name,email_address,password } = req.body;
+    const regex = /.+@correounivalle.edu.co$/;
+    const isValid = regex.test(email_address);
+    if(!isValid){
+        res.status(401).send({
+            msg: "Email no pertenece a la Universidad Del Valle"
+        })
+    }
     const user = {
         names,
         last_names,
