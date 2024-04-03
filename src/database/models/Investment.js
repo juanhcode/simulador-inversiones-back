@@ -24,7 +24,7 @@ const Investment = db.define('investment', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    currency: {
+    currency_id: {
         type: DataTypes.INTEGER,
         references:{
             model:Currency,

@@ -2,8 +2,8 @@ const investmentService = require('../services/investment.service');
 const createInvestment = async (req, res) => {
     const { description, quantity, price,type_of_investment,currency,user_id } = req.body;
     const newInvestment = {
-        description, quantity, price, type_of_investment,currency, user_id
-    }   
+        description, quantity, price, type_of_investment,currency_id:currency, user_id
+    }
     try {
         const response = await investmentService.createInvestment(newInvestment);
         if (response?.errors) {
