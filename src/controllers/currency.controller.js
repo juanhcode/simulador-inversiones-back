@@ -15,7 +15,9 @@ const postCurrencyController = async (req, res) => {
         }
         res.status(201).json({
             status:"CREATED",
-            data: "Moneda creada",
+            msg: "Moneda creada",
+            data: newCurrency
+
         })
     } catch (error) {
         console.log(error);
@@ -55,7 +57,8 @@ const updateCurrencyController = async (req, res) => {
     }
     await currencyService.updateCurrency(id, newCurrency);
     res.status(200).json({
-        msg: `La moneda ha sido actualizada.`
+        msg: `La moneda ha sido actualizada.`,
+        data: newCurrency
     });
 }
 
