@@ -1,4 +1,4 @@
-const Currency = require('../database/models/Currency');
+const Currency = require('../database/models/currency');
 
 const createCurrency = async(currency) => {
     const create = await Currency.create(currency);

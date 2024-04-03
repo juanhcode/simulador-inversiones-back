@@ -17,9 +17,9 @@ app.use('/v1/auth', auth);
 app.use('/v1/investment', investment);
 app.use('/v1/currency', currency);
 
-let server = app.listen(4060, async () => {
+let server = app.listen(0, async () => {
     await db.authenticate();
     console.log('Database online');
-    //const port1 = server.address().port;
-    console.log(`Application server running on ${4060}`);
+    const port1 = server.address().port;
+    console.log(`Application server running on ${port1}`);
 });
