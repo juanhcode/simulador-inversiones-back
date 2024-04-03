@@ -8,7 +8,6 @@ require('dotenv').config();
 const auth = require('./routes/v1/auth.routes');
 const investment = require('./routes/v1/investment.routes');
 const currency = require('./routes/v1/currency.routes');
-const path = require("path");
 
 app.use(morgan('dev'));
 app.use(express.json());
