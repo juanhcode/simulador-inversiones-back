@@ -1,25 +1,25 @@
 const { DataTypes } = require('sequelize');
 const db = require('../connection');
 
-const User = db.define('user', {
-    id: {
+const User = db.define('"user"', {
+    user_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey:true
     },
-    firstName: {
+    names: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    last_name: {
+    last_names: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    username: {
+    user_name: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    email: {
+    email_address: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -30,10 +30,10 @@ const User = db.define('user', {
     {
     timestamps: false,
     freezeTableName: true,
-    tableName: 'user'
+    tableName: '"user"'
 });
 
-//User.belongsTo(Role,{foreignKey:'id'});
+
 
 User.prototype.toJSON = function(){
     let values = Object.assign({}, this.get());
