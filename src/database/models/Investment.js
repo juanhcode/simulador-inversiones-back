@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../connection');
 const User = require('./User');
-const Currency = require('./Currency');
+const Currency = require('./currency');
 const Investment = db.define('investment', {
     investment_id: {
         type: DataTypes.INTEGER,
