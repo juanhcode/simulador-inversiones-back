@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const Investment = require('../database/models/Investment')
 const createInvestment = async (investment) => {
     const newInvestment = new Investment(investment);
@@ -32,8 +33,13 @@ const getInvestmentById = async(investmentId)=>{
     return investment;
 }
 
-const getAllInvestments = async()=>{
-    const investments = await Investment.findAll();
+const getAllInvestments = async(userId)=>{
+    console.log(userId);
+    const investments = await Investment.findAll({
+        where:{
+            user_id:userId
+        }
+    });
     return investments;
 }
 const updateInvestment = async(id,investment)=>{
