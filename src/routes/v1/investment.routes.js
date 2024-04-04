@@ -24,7 +24,7 @@ router.get('/:id',[
     validateFields
 ], investmentController.getInvestment);
 
-router.get('',investmentController.getAllInvestments);
+router.get('/all/:id',investmentController.getAllInvestments);
 
 router.put('/:id',[
     check("description", "La descripción es obligatorio").not().isEmpty().isString(),

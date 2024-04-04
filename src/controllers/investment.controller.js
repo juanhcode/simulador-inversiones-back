@@ -55,8 +55,9 @@ const getInvestment = async (req, res) => {
 }
 
 const getAllInvestments = async (req, res) => {
+    const id = req.params.id;
     try {
-        const investment = await investmentService.getAllInvestments();
+        const investment = await investmentService.getAllInvestments(id);
         if(investment.length > 0){
             res.status(200).json(investment);
         }else{
