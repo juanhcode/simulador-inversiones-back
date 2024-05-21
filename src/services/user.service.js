@@ -9,15 +9,15 @@ const isValidEmail = async (email_address) => {
     return isEmailExists;
 }
 const createUser = async (newUser) => {
-    const { names, last_names,user_name,email_address,password} = newUser;
+    const { first_names, last_names,user_name,email_address,password,rol_id} = newUser;
     const passwordHash = await bcrypt.hash(password, 10);
-    console.log(passwordHash);
     const user = new User({
-        names,
+        first_names,
         last_names,
         user_name,
         email_address,
         password: passwordHash,
+        rol_id,
     });
     try {
         await user.save();

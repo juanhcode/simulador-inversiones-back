@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const db = require('../connection');
 const User = require('./User');
-const Currency = require('./currency');
 const Investment = db.define('investment', {
     investment_id: {
         type: DataTypes.INTEGER,
@@ -12,24 +11,13 @@ const Investment = db.define('investment', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    quantity: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    price: {
+    multiplier: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
     type_of_investment : {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    currency_id: {
-        type: DataTypes.INTEGER,
-        references:{
-            model:Currency,
-            key:'currency_id'
-        }
     },
     user_id : {
         type: DataTypes.INTEGER,
@@ -46,8 +34,6 @@ const Investment = db.define('investment', {
 );
 
 Investment.belongsTo(User,{foreignKey:'user_id'});
-
-Investment.belongsTo(Currency,{foreignKey:'currency_id'});
 
 Investment.prototype.toJSON = function(){
     let values = Object.assign({}, this.get());
