@@ -1,11 +1,12 @@
 const investmentService = require('../services/investment.service');
 const createInvestment = async (req, res) => {
-    const { description, quantity, price,type_of_investment,currency,user_id } = req.body;
+    const { description , multiplier , type_of_investment , user_id } = req.body;
     const newInvestment = {
-        description, quantity, price, type_of_investment,currency_id:currency, user_id
+        description,multiplier,type_of_investment,user_id
     }
     try {
         const response = await investmentService.createInvestment(newInvestment);
+        console.log(response);
         if (response?.errors) {
             res.status(400).json({
                 status:'BAD REQUEST',
