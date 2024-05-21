@@ -34,13 +34,12 @@ const getInvestmentById = async(investmentId)=>{
 }
 
 const getAllInvestments = async(userId)=>{
-    console.log(userId);
     const investments = await Investment.findAll({
         where:{
             user_id:userId
         }
     });
-    return investments;
+    return investments.sort((a,b)=>a.investment_id-b.investment_id);
 }
 const updateInvestment = async(id,investment)=>{
     const investmentUpdated = await Investment.update(investment,{
