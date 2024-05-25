@@ -21,11 +21,10 @@ router.get('/:id', [
 router.put('/:id', [
     check("id", "El id es obligatorio").not().isEmpty(),
 ], currencyController.updateCurrencyController);
-
+*/
 router.delete('/:id', [
     check("id", "El id es obligatorio").not().isEmpty(),
     validateFields
-],currencyController.deleteCurrencyController);
-*/
+],itemController.deleteItemController);
 
 module.exports = router;

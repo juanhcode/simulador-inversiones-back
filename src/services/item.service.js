@@ -32,22 +32,28 @@ const updateCurrency = async(id, currency) => {
     return update
 }
 
-const deleteCurrency = async(id) => {
-    const deleteC = await Currency.destroy({
+const deleteItems = async(investment_id) => {
+    const itemsDeleted = await Item.destroy({
         where: {
-            currency_id:id
+            investment_id
         }
     })
-    return deleteC;
+    return itemsDeleted;
 }
 
 //Validaciones de la bd
-const currencyExistsById = async (id) => {
-    const currency = await Currency.findByPk(id);
+const itemExistsInvestmentId = async (investment_id) => {
+    const currency = await Item.findAll({
+        where: {
+            investment_id
+        }
+    });
     return currency;
 }
 
 module.exports = {
     createItem,
-    getAllItems
+    getAllItems,
+    itemExistsInvestmentId,
+    deleteItems
 }

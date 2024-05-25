@@ -1,20 +1,21 @@
+const { default: axios } = require('axios');
 const investmentService = require('../services/investment.service');
 const createInvestment = async (req, res) => {
-    const { description , multiplier , type_of_investment , user_id } = req.body;
+    const { description, multiplier, type_of_investment, user_id } = req.body;
     const newInvestment = {
-        description,multiplier,type_of_investment,user_id
+        description, multiplier, type_of_investment, user_id
     }
     try {
         const response = await investmentService.createInvestment(newInvestment);
         console.log(response);
         if (response?.errors) {
             res.status(400).json({
-                status:'BAD REQUEST',
+                status: 'BAD REQUEST',
                 data: "Ups, vuelve a intentarlo",
             })
         }
         res.status(201).json({
-            status:"CREATED",
+            status: "CREATED",
             data: "Investment created",
         })
     } catch (error) {
@@ -33,23 +34,28 @@ const deleteInvestment = async (req, res) => {
             msg: `No existe la inversión con el id ${id}`
         })
     }
-    await investmentService.deleteInvestment(id);
-    res.status(200).json({
-        msg: `Inversión con el id ${id} ha sido eliminado.`
+    const itemsDeleted = await axios.delete(`http://localhost:3000/v1/item/${id}`);
+    if (itemsDeleted.status === 200) {
+        await investmentService.deleteInvestment(id);
+        return res.status(200).json({
+            msg: `Inversión con el id ${id} ha sido eliminado.`
+        });
+    }
+    return res.status(500).json({
+        msg: `Error al eliminar la inversión con el id ${id}`
     });
-
 }
 
 const getInvestment = async (req, res) => {
     const id = req.params.id;
     try {
         const investment = await investmentService.getInvestmentById(id);
-        if(investment){
+        if (investment) {
             res.status(200).json(investment);
-        }else{
+        } else {
             res.status(400).json({ error: 'Ups, vuelve a intentarlo' });
         }
-        
+
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener la inversión' });
     }
@@ -59,9 +65,9 @@ const getAllInvestments = async (req, res) => {
     const id = req.params.id;
     try {
         const investment = await investmentService.getAllInvestments(id);
-        if(investment.length > 0){
+        if (investment.length > 0) {
             res.status(200).json(investment);
-        }else{
+        } else {
             res.status(200).json({ error: 'No tienes inversiones, crea una 😁' });
         }
     } catch (error) {
@@ -71,10 +77,10 @@ const getAllInvestments = async (req, res) => {
 
 const updateInvestment = async (req, res) => {
     const id = req.params.id;
-    const { description, quantity,price,type_of_investment,currency,user_id } = req.body;
+    const { description, quantity, price, type_of_investment, currency, user_id } = req.body;
     const newInvestment = {
-        description, quantity, price, type_of_investment,currency, user_id
-    } 
+        description, quantity, price, type_of_investment, currency, user_id
+    }
     const investmentExists = await investmentService.investmentExistsById(id);
     if (!investmentExists) {
         return res.status(404).json({

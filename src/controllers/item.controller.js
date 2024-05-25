@@ -96,22 +96,22 @@ const updateCurrencyController = async (req, res) => {
     });
 }
 
-const deleteCurrencyController = async (req, res) => {
+const deleteItemController = async (req, res) => {
     const {id}  = req.params;
-    const currencyExists = await currencyService.currencyExistsById(id);
-    if (!currencyExists) {
+    const itemExists = await itemService.itemExistsInvestmentId(id);
+    if (itemExists.length === 0) {
         return res.status(404).json({
-            msg: `No existe la moneda con el id ${id}`
+            msg: `No existe los items con el id ${id}`
         })
     }
-    await currencyService.deleteCurrency(id);
+    await itemService.deleteItems(id);
     res.status(200).json({
-        msg: `Moneda con el id ${id} ha sido eliminado.`
+        msg: `Items con el id ${id} ha sido eliminado.`
     });
-
 }
 
 module.exports = {
     postItemController,
-    getAllItemsByInvestmentController
+    getAllItemsByInvestmentController,
+    deleteItemController
 }
