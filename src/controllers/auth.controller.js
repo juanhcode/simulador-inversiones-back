@@ -29,7 +29,7 @@ const login = async (req, res) => {
 
 
 const register = (req, res) => {
-    const { names, last_names,user_name,email_address,password } = req.body;
+    const { names, first_names,  last_names , user_name , email_address , password , rol_id} = req.body;
     const regex = /.+@correounivalle.edu.co$/;
     const isValid = regex.test(email_address);
     if(!isValid){
@@ -38,11 +38,12 @@ const register = (req, res) => {
         })
     }
     const user = {
-        names,
+        first_names,
         last_names,
         user_name,
         email_address,
-        password
+        password,
+        rol_id
     }
     const response = userService.createUser(user);
     if (response) {
