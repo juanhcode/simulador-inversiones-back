@@ -78,10 +78,11 @@ const getAllInvestments = async (req, res) => {
 }
 
 const updateInvestment = async (req, res) => {
+    const baseURL = process.env.BASE_URL;
     const id = req.params.id;
-    const { description, quantity, price, type_of_investment, currency, user_id } = req.body;
+    const { description, multiplier, type_of_investment, user_id, items } = req.body;
     const newInvestment = {
-        description, quantity, price, type_of_investment, currency, user_id
+        description, multiplier, type_of_investment, user_id
     }
     const investmentExists = await investmentService.investmentExistsById(id);
     if (!investmentExists) {
@@ -89,10 +90,25 @@ const updateInvestment = async (req, res) => {
             msg: `No existe la inversión con el id ${id}`
         })
     }
-    await investmentService.updateInvestment(id, newInvestment);
-    res.status(200).json({
-        msg: `La Inversión ha sido actualizada.`
-    });
+    await Promise.all(items.map(async (item) => {
+        const { item_id, description, price, quantity, currency } = item;
+        const updatedItem = {
+            description,
+            price,
+            quantity,
+            currency
+        };
+        const response = await axios.put(`${baseURL}/v1/item/${item_id}`, updatedItem);
+        if(response.status === 200){
+            await investmentService.updateInvestment(id, newInvestment);
+            return res.status(200).json({
+                msg: `La Inversión ha sido actualizada.`
+            });
+        }
+        return res.status(500).json({
+            msg: `Error al actualizar la inversión con el id ${id}`
+        });
+    }));   
 }
 
 const searchInvestment = async (req, res) => {

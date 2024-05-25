@@ -17,11 +17,10 @@ router.get('/:id', [
     check("id", "El id es obligatorio").not().isEmpty(),
     validateFields
 ], itemController.getAllItemsByInvestmentController);
-/*
+
 router.put('/:id', [
     check("id", "El id es obligatorio").not().isEmpty(),
-], currencyController.updateCurrencyController);
-*/
+], itemController.updateItemController);
 router.delete('/:id', [
     check("id", "El id es obligatorio").not().isEmpty(),
     validateFields

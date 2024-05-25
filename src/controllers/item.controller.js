@@ -49,10 +49,12 @@ async function getInvestmentWithCurrency(item) {
         const response = await axios.get(`${baseURL}/v1/currency/${item.currency_id}`);
         const currencyByItem = response.data;
         let objItemWithCurrency = {
+            item_id: item.item_id,
             description: item.description,
             price: item.price,
             quantity: item.quantity,
             currency:{
+                currency_id: currencyByItem[0].currency_id,
                 name: currencyByItem[0].name,
                 value: currencyByItem[0].value
             },
@@ -63,37 +65,27 @@ async function getInvestmentWithCurrency(item) {
     }
 }
 
-const getCurrencyController = async (req, res) => {
-    const user_id = req.params.id;
-    try {
-        const currency = await currencyService.readCurrency(user_id);
-        if(currency){
-            res.status(200).json(currency);
-        }else{
-            res.status(400).json({ error: 'Ups, intenta nuevamente' });
-        }
-        
-    } catch (error) {
-        res.status(500).json({ error: 'Error del servidor' });
-    }
-}
 
-const updateCurrencyController = async (req, res) => {
+const updateItemController = async (req, res) => {
+    const baseURL = process.env.BASE_URL;
     const id = req.params.id;
-    const { name, value, investment_id, user_id } = req.body;
-    const newCurrency = {
-        name, value, investment_id, user_id
-    } 
-    const currencyExists = await currencyService.currencyExistsById(id);
-    if (!currencyExists) {
+    const { description, price, quantity, currency } = req.body;
+    const newItem = {
+        description, price, quantity
+    }
+    const itemExists = await itemService.itemExists(id);
+    if (!itemExists) {
         return res.status(404).json({
-            msg: `No existe la moneda con el id ${id}`
+            msg: `No existe el item con el id ${id}`
         })
     }
-    await currencyService.updateCurrency(id, newCurrency);
-    res.status(200).json({
-        msg: `La moneda ha sido actualizada.`
-    });
+    const response = await axios.put(`${baseURL}/v1/currency/${currency.currency_id}`, currency);
+    if(response.status === 200){
+        await itemService.updateItem(id, newItem);
+        res.status(200).json({
+            msg: `El item ha sido actualizado.`
+        });
+    }
 }
 
 const deleteItemController = async (req, res) => {
@@ -113,5 +105,6 @@ const deleteItemController = async (req, res) => {
 module.exports = {
     postItemController,
     getAllItemsByInvestmentController,
-    deleteItemController
+    deleteItemController,
+    updateItemController
 }

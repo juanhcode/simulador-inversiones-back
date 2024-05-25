@@ -14,19 +14,10 @@ const getAllItems = async(investment_id)=>{
     return items;
 }
 
-const readCurrency = async(user_id) => {
-    const get = await Currency.findAll({
+const updateItem = async(id, item) => {
+    const update = await Item.update(item, {
         where: {
-            user_id:user_id
-        }
-    });
-    return get;
-}
-
-const updateCurrency = async(id, currency) => {
-    const update = await Currency.update(currency, {
-        where: {
-            currency_id:id
+            item_id:id
         }
     })
     return update
@@ -51,9 +42,16 @@ const itemExistsInvestmentId = async (investment_id) => {
     return currency;
 }
 
+const itemExists = async (id) => {
+    const item = await Item.findByPk(id);
+    return item;
+}
+
 module.exports = {
     createItem,
     getAllItems,
     itemExistsInvestmentId,
-    deleteItems
+    deleteItems,
+    itemExists,
+    updateItem
 }
