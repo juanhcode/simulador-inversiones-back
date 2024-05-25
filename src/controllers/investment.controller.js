@@ -95,10 +95,22 @@ const updateInvestment = async (req, res) => {
     });
 }
 
+const searchInvestment = async (req, res) => {
+    const { word } = req.query;
+    const investment = await investmentService.searchInvestment(word);
+    if (!investment) {
+        return res.status(404).json({
+            msg: `No existe la inversión con la descripción ${word}`
+        })
+    }
+    res.status(200).json(investment);
+}
+
 module.exports = {
     createInvestment,
     deleteInvestment,
     getInvestment,
     getAllInvestments,
-    updateInvestment
+    updateInvestment,
+    searchInvestment
 }

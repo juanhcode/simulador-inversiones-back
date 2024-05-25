@@ -16,12 +16,11 @@ router.delete('/:id',[
     check("id", "El id es obligatorio").not().isEmpty(),
     validateFields
 ], investmentController.deleteInvestment);
-
-router.get('/:id',[
+router.get('/details/:id',[
     check("id", "El id es obligatorio").not().isEmpty(),
     validateFields
 ], investmentController.getInvestment);
-
+router.get('/search',investmentController.searchInvestment);
 router.get('/all/:id',investmentController.getAllInvestments);
 
 router.put('/:id',[
