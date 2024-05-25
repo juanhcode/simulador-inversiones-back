@@ -1,5 +1,6 @@
 const { default: axios } = require('axios');
 const investmentService = require('../services/investment.service');
+require('dotenv').config();
 const createInvestment = async (req, res) => {
     const { description, multiplier, type_of_investment, user_id } = req.body;
     const newInvestment = {
@@ -34,7 +35,8 @@ const deleteInvestment = async (req, res) => {
             msg: `No existe la inversión con el id ${id}`
         })
     }
-    const itemsDeleted = await axios.delete(`http://localhost:3000/v1/item/${id}`);
+    const baseURL = process.env.BASE_URL;
+    const itemsDeleted = await axios.delete(`${baseURL}/v1/item/${id}`);
     if (itemsDeleted.status === 200) {
         await investmentService.deleteInvestment(id);
         return res.status(200).json({
