@@ -1,3 +1,5 @@
+const { default: axios } = require('axios');
+require('dotenv').config();
 const itemService = require('../services/item.service');
 
 const postItemController = async (req, res) => {
@@ -23,6 +25,41 @@ const postItemController = async (req, res) => {
             status: 'Error del servidor',
             data: error
         })
+    }
+}
+
+const getAllItemsByInvestmentController = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const items = await itemService.getAllItems(id);
+        if(items.length > 0){
+            const data = await Promise.all(items.map(getInvestmentWithCurrency));
+            res.status(200).json(data);
+        }else{
+            res.status(200).json({ error: 'No tienes items, crea uno 😁' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener todos las inversiones' });
+    }
+}
+
+async function getInvestmentWithCurrency(item) {
+    const baseURL = process.env.BASE_URL;
+    try {
+        const response = await axios.get(`${baseURL}/v1/currency/${item.currency_id}`);
+        const currencyByItem = response.data;
+        let objItemWithCurrency = {
+            description: item.description,
+            price: item.price,
+            quantity: item.quantity,
+            currency:{
+                name: currencyByItem[0].name,
+                value: currencyByItem[0].value
+            },
+        }
+        return objItemWithCurrency;
+    } catch (error) {
+        return error;
     }
 }
 
@@ -76,4 +113,5 @@ const deleteCurrencyController = async (req, res) => {
 
 module.exports = {
     postItemController,
+    getAllItemsByInvestmentController
 }

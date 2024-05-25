@@ -13,12 +13,11 @@ router.post('/', [
     validateFields
 ], itemController.postItemController);
 
-/*
 router.get('/:id', [
     check("id", "El id es obligatorio").not().isEmpty(),
     validateFields
-], currencyController.getCurrencyController);
-
+], itemController.getAllItemsByInvestmentController);
+/*
 router.put('/:id', [
     check("id", "El id es obligatorio").not().isEmpty(),
 ], currencyController.updateCurrencyController);
