@@ -1,10 +1,5 @@
 const Currency = require('../database/models/Currency');
 
-const createCurrency = async(currency) => {
-    const create = await Currency.create(currency);
-    return create;
-}
-
 const readCurrency = async(user_id) => {
     const get = await Currency.findAll({
         where: {
@@ -23,15 +18,6 @@ const updateCurrency = async(id, currency) => {
     return update
 }
 
-const deleteCurrency = async(id) => {
-    const deleteC = await Currency.destroy({
-        where: {
-            currency_id:id
-        }
-    })
-    return deleteC;
-}
-
 //Validaciones de la bd
 const currencyExistsById = async (id) => {
     const currency = await Currency.findByPk(id);
@@ -39,9 +25,7 @@ const currencyExistsById = async (id) => {
 }
 
 module.exports = {
-    createCurrency,
     readCurrency,
     updateCurrency,
-    deleteCurrency,
     currencyExistsById
 }
