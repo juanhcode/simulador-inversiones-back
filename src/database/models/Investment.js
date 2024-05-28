@@ -11,19 +11,7 @@ const Investment = db.define('investment', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    quantity: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    price: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    individual_total : {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    total: {
+    multiplier: {
         type: DataTypes.INTEGER,
         allowNull: false
     },

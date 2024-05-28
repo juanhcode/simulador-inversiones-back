@@ -1,4 +1,4 @@
-const Currency = require('../database/models/Currency');
+const Currency = require('../database/models/currency');
 
 const readCurrency = async(user_id) => {
     const get = await Currency.findAll({

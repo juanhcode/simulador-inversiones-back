@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const db = require('../connection');
-const Investment = require('./Investment');
 const User = require('./User');
 
 const Currency = db.define('Currency', {
